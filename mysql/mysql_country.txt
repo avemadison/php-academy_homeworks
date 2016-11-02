@@ -80,3 +80,9 @@ SELECT * FROM country ORDER BY continent, name;
 
 22. Получить последнюю добавленную запись из таблицы country.
 SELECT * FROM country LIMIT 9, 10;
+
+23. Изменить количество населения в странах Европы  изменить действующего президента одной из стран.
+UPDATE country SET population = 123547821 WHERE continent = 'Европа';
+
+24. Изменить действующего президента одной из стран.
+UPDATE country SET president = 'unknown' WHERE name = 'Соединённые Штаты Америки';
