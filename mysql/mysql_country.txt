@@ -22,8 +22,8 @@ CREATE TABLE country (id INT AUTO_INCREMENT,
     -> ('Канада', 'ca', '9984670', '36048521', 'Северная Америка', 'Елизавета II'),
     -> ('Австралия', 'au', '7692024', '24067700', 'Австралия', 'Елизавета II'),
     -> ('Египет', 'eg', '1001450', '88487396', 'Африка', 'Абдул-Фаттах Ас-Сиси'),
-    -> ('Соединённые Штаты Америки', 'us', '9500000', '325000000', 'Северная        Америка', 'Барак Обама'),
-    -> ('Китайская Народная Республика', 'cn', '9598962', '1548541278', 'Азия', 'Си        Цзиньпин');
+    -> ('Соединённые Штаты Америки', 'us', '9500000', '325000000', 'Северная Америка', 'Барак Обама'),
+    -> ('Китайская Народная Республика', 'cn', '9598962', '1548541278', 'Азия', 'Си Цзиньпин');
 4. Получить все записи всех полей из таблицы country.
 SELECT * FROM country;
 
@@ -39,7 +39,6 @@ SELECT * FROM country WHERE id >= 3 AND id <=7;
 8. Получить страны, в которых население больше 20 миллионов и порядковые номера которых меньше 7. 
 SELECT * FROM country WHERE population > 20000000 AND  id < 7;
 
-
 9. Получить информацию о стране по конкретному названию.
 SELECT * FROM country WHERE name like 'Египет';
 
@@ -52,5 +51,20 @@ SELECT * FROM country WHERE id IN (5, 7, 2);
 12. Получить страны, названия которых содержат символ n.
 SELECT * FROM country WHERE name LIKE '%n%';
 
-13 Получить выборку всех записей таблицы, назначив псевдонимы в виде сокращенных названий столбцов. 
+13. Получить выборку всех записей таблицы, назначив псевдонимы в виде сокращенных названий столбцов. 
 SELECT id, name AS nm, short_name AS sh_n, area AS ar, population AS pop, continent AS cont, president AS pre FROM country;
+
+14. Получить список континентов без повторений.
+SELECT DISTINCT continent FROM country;
+
+15. Сгруппировать записи по названию континентов.
+SELECT * FROM country GROUP BY continent;
+
+16. Получить максимальное и минимальное население по странам. 
+SELECT MIN(population) as minPopulation, MAX(population) as maxPopulation FROM country;
+
+17 Получить среднее население по Европейским странам. 
+SELECT AVG(population) as avgPopulation FROM country WHERE continent LIKE 'Европа';
+
+18 Получить общее население всех стран.
+SELECT SUM(population) as sum FROM country;
