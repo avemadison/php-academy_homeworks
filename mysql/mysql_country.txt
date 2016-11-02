@@ -63,8 +63,17 @@ SELECT * FROM country GROUP BY continent;
 16. Получить максимальное и минимальное население по странам. 
 SELECT MIN(population) as minPopulation, MAX(population) as maxPopulation FROM country;
 
-17 Получить среднее население по Европейским странам. 
+17. Получить среднее население по Европейским странам. 
 SELECT AVG(population) as avgPopulation FROM country WHERE continent LIKE 'Европа';
 
-18 Получить общее население всех стран.
+18. Получить общее население всех стран.
 SELECT SUM(population) as sum FROM country;
+
+19. Получить континенты, среднее население по странам которых которых превышает 40 000 000 человек.
+SELECT continent, AVG(population) FROM country GROUP BY continent HAVING AVG(population) > 40000000;
+
+20. Получить полную таблицу упорядоченную по названию страны. 
+SELECT * FROM country ORDER BY name;
+
+21. Получить полную таблицу упорядоченную по названию континентов и по названию страны.
+SELECT * FROM country ORDER BY continent, name;
