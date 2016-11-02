@@ -86,3 +86,6 @@ UPDATE country SET population = 123547821 WHERE continent = 'Европа';
 
 24. Изменить действующего президента одной из стран.
 UPDATE country SET president = 'unknown' WHERE name = 'Соединённые Штаты Америки';
+
+25. Удалить одну из записей из таблицы country
+DELETE FROM country WHERE id = 8;
