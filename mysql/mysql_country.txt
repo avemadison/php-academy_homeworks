@@ -89,3 +89,53 @@ UPDATE country SET president = 'unknown' WHERE name = 'Соединённые Ш
 
 25. Удалить одну из записей из таблицы country
 DELETE FROM country WHERE id = 8;
+
+26. Создать новую колонку continent_id, которя имеет тип TINYINT и значения по умолчанию NULL.
+ALTER TABLE country ADD continent_id TINYINT NULL AFTER `president`;
+
+27. Добавить индекс по полю continent_id
+ALTER TABLE country ADD INDEX(continent_id);
+
+28. Создать новую таблицу continent, в которой будут сохранены названия континентов. Связать таблицу continent с таблицей country по полю continent_id при помощи внешнего ключа. После этого удалить из таблицы поле, которое явно указывает название континента.
+
+CREATE TABLE `practice_db`.`continent` (id TINYINT(2) AUTO_INCREMENT, name VARCHAR(25), description VARCHAR (50), PRIMARY KEY (id)) CHARACTER SET utf8 COLLATE utf8_general_ci; 
+
+INSERT INTO `continent` (`id`, `name`) VALUES 
+(NULL, 'Европа'), 
+(NULL, 'Азия'), 
+(NULL, 'Северная Америка'), 
+(NULL, 'Южная Америка'), 
+(NULL, 'Африка'), 
+(NULL, 'Австралия'), 
+(NULL, 'Антарктида');
+
+ALTER TABLE country 
+ADD CONSTRAINT c_continent_id
+FOREIGN KEY (continent_id)
+REFERENCES `practice_db`.`continent`(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+UPDATE country SET continent_id = (SELECT continent.id FROM continent WHERE country.continent=continent.name);
+
+ALTER TABLE country DROP COLUMN continent;
+
+29. Создать таблицу с языками language (например English, Ukrainian, ...). Связать таблицу country с таблицей language, моделируя используемые языки в разных странах. Например, в Украине чаще остальных используют украинский и русский язык. Таким образом необходимо получить связь многие ко многим.
+
+CREATE TABLE `practice_db`.`language` (
+id TINYINT(2) AUTO_INCREMENT,
+name VARCHAR(30),
+PRIMARY KEY(id))
+CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+INSERT INTO language (`id`, `name`) VALUES (NULL, 'Украинский'), (NULL, 'Русский'), (NULL, 'Английский'), (NULL, 'Итальянский'), (NULL, 'Португальский'), (NULL, 'Японский'), (NULL, 'Суахили'), (NULL, 'Арабский'), (NULL, 'Китайский'),  (NULL, 'Испанский');
+
+CREATE TABLE  `practice_db`.`country_language` (
+id TINYINT NOT NULL AUTO_INCREMENT, 
+country_id TINYINT NOT NULL, 
+language_id TINYINT NOT NULL,
+PRIMARY KEY (id))
+DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+ALTER TABLE country_language ADD INDEX (country_id);
+ALTER TABLE country_language ADD INDEX (language_id);
