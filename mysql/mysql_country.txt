@@ -3,27 +3,27 @@ CREATE DATABASE  practice_db CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 2. В БД из предыдущего занятия создать таблицу country, в которой будут храниться данные о странах: название, сокращенное название (например ua, uk, es), площадь территории, численность населения, континент, президент 
 CREATE TABLE country (id INT AUTO_INCREMENT,
-    -> name VARCHAR(100),
-    -> short_name CHAR(2),
-    -> area INT,
-    -> population INT,
-    -> continent VARCHAR (40),
-    -> president VARCHAR (50),
-    -> PRIMARY KEY (id)
-    -> );
+     name VARCHAR(100),
+     short_name CHAR(2),
+     area INT,
+     population INT,
+     continent VARCHAR (40),
+     president VARCHAR (50),
+     PRIMARY KEY (id)
+     );
 
 3. Вставить в таблицу country 10 записей
  INSERT INTO country (name, short_name, area, population, continent, president) VALUES
-    -> ('Украина', 'ua', '603549', '48240902', 'Европа', 'Порошенко П.А.'),
-    -> ('Япония', 'jp', '377944', '126985000', 'Азия', 'Акихито'),
-    -> ('Италия', 'it', '301340', '60795612', 'Европа', 'Серджо Маттарелла'),
-    -> ('Бразилия', 'br', '8514877', '205823665', 'Южная Америка', 'Мишел Темер'),
-    -> ('Кения', 'ke', '582650', '44037656', 'Африка', 'Ухуру Кениата'),
-    -> ('Канада', 'ca', '9984670', '36048521', 'Северная Америка', 'Елизавета II'),
-    -> ('Австралия', 'au', '7692024', '24067700', 'Австралия', 'Елизавета II'),
-    -> ('Египет', 'eg', '1001450', '88487396', 'Африка', 'Абдул-Фаттах Ас-Сиси'),
-    -> ('Соединённые Штаты Америки', 'us', '9500000', '325000000', 'Северная Америка', 'Барак Обама'),
-    -> ('Китайская Народная Республика', 'cn', '9598962', '1548541278', 'Азия', 'Си Цзиньпин');
+    ('Украина', 'ua', '603549', '48240902', 'Европа', 'Порошенко П.А.'),
+    ('Япония', 'jp', '377944', '126985000', 'Азия', 'Акихито'),
+    ('Италия', 'it', '301340', '60795612', 'Европа', 'Серджо Маттарелла'),
+    ('Бразилия', 'br', '8514877', '205823665', 'Южная Америка', 'Мишел Темер'),
+    ('Кения', 'ke', '582650', '44037656', 'Африка', 'Ухуру Кениата'),
+    ('Канада', 'ca', '9984670', '36048521', 'Северная Америка', 'Елизавета II'),
+    ('Австралия', 'au', '7692024', '24067700', 'Австралия', 'Елизавета II'),
+    ('Египет', 'eg', '1001450', '88487396', 'Африка', 'Абдул-Фаттах Ас-Сиси'),
+    ('Соединённые Штаты Америки', 'us', '9500000', '325000000', 'Северная Америка', 'Барак Обама'),
+    ('Китайская Народная Республика', 'cn', '9598962', '1548541278', 'Азия', 'Си Цзиньпин');
 4. Получить все записи всех полей из таблицы country.
 SELECT * FROM country;
 
@@ -122,20 +122,94 @@ ALTER TABLE country DROP COLUMN continent;
 
 29. Создать таблицу с языками language (например English, Ukrainian, ...). Связать таблицу country с таблицей language, моделируя используемые языки в разных странах. Например, в Украине чаще остальных используют украинский и русский язык. Таким образом необходимо получить связь многие ко многим.
 
-CREATE TABLE `practice_db`.`language` (
-id TINYINT(2) AUTO_INCREMENT,
-name VARCHAR(30),
-PRIMARY KEY(id))
+CREATE TABLE `language` ( `id` 
+TINYINT NOT NULL AUTO_INCREMENT,  
+`name` VARCHAR(100) NOT NULL , 
+PRIMARY KEY (`id`)) ENGINE = InnoDB 
 CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-INSERT INTO language (`id`, `name`) VALUES (NULL, 'Украинский'), (NULL, 'Русский'), (NULL, 'Английский'), (NULL, 'Итальянский'), (NULL, 'Португальский'), (NULL, 'Японский'), (NULL, 'Суахили'), (NULL, 'Арабский'), (NULL, 'Китайский'),  (NULL, 'Испанский');
+INSERT INTO language (`id`, `name`) VALUES 
+(NULL, 'Украинский'), 
+(NULL, 'Русский'),
+(NULL, 'Английский'), 
+(NULL, 'Итальянский'), 
+(NULL, 'Португальский'), 
+(NULL, 'Японский'), 
+(NULL, 'Суахили'), 
+(NULL, 'Арабский'), 
+(NULL, 'Китайский'),  
+(NULL, 'Испанский');
 
-CREATE TABLE  `practice_db`.`country_language` (
-id TINYINT NOT NULL AUTO_INCREMENT, 
-country_id TINYINT NOT NULL, 
-language_id TINYINT NOT NULL,
-PRIMARY KEY (id))
-DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+CREATE TABLE `country_language` (
+`id` TINYINT NOT NULL AUTO_INCREMENT,  
+`country_id` TINYINT NOT NULL,
+`language_id` TINYINT NOT NULL, 
+PRIMARY KEY  (`id`)) ENGINE = InnoDB 
+CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+INSERT INTO country_language (`id`, `country_id`, `language_id`) VALUES (NULL, '1', '1'), 
+(NULL, '1', '2'), 
+(NULL, '2', '3'), 
+(NULL, '2', '10'), 
+(NULL, '2', '9'), 
+(NULL, '3', '4'), 
+(NULL, '4', '5'), 
+(NULL, '5', '3'), 
+(NULL, '5', '9'), 
+(NULL, '5', '4'), 
+(NULL, '6', '9'), 
+(NULL, '7', '6'), 
+(NULL, '7', '3'), 
+(NULL, '8', '8'), 
+(NULL, '10', '3'), 
+(NULL, '10', '7');
+
+ALTER TABLE country_language ADD INDEX (language_id);
 
 ALTER TABLE country_language ADD INDEX (country_id);
-ALTER TABLE country_language ADD INDEX (language_id);
+
+ALTER TABLE country_language 
+ADD CONSTRAINT c_language_id 
+FOREIGN KEY (language_id)  REFERENCES language(id)
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+30. Соединить таблицы country, continent для получения названий стран и названий континентов
+
+SELECT country.name AS country, continent.name AS continent FROM country, continent WHERE continent.id=continent_id;
+
+31. Выполнить предыдущее задание при помощи JOIN
+
+SELECT country.name AS country, continent.name AS continent FROM country JOIN continent ON continent.id=continent_id;
+
+32. Добавить в таблицу languages новые языки. Получить выборку тех языков, которые не используются в имеющихся в базе данных странах. Использовать оператор сравнения IS NULL
+
+INSERT INTO language (id, name) VALUES 
+(NULL, 'Норвежский'), 
+(NULL, 'Французский'), 
+(NULL, 'Греческий'),
+(NULL, 'Немекций'), 
+(NULL, 'Польский'),
+(NULL, 'Чешский'), 
+(NULL, 'Албанский')
+(NULL, 'Венгерский'), 
+(NULL, 'Турецкий'), 
+(NULL, 'Финский');
+
+SELECT language.name AS language FROM `language` LEFT JOIN country_language ON language.id=country_language.language_id WHERE country_language.country_id IS NULL;
+
+21. Добавить в таблицу country поле для премьер-министра страны и заполнить записи значениями. Вывести на экран таблицу, в которой будет представлены все президенты и все премьер-министры всех стран в одну колонку.
+
+UPDATE `country` SET `prime_minister` = 'Гройсман Владимир' WHERE `country`.`id` = 1;
+UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 2;
+UPDATE `country` SET `prime_minister` = 'Маттео Ренци' WHERE `country`.`id` = 3;
+UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 4;
+UPDATE `country` SET `prime_minister` = 'Малкольм Тернбулл' WHERE `country`.`id` = 5;
+UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 6;
+UPDATE `country` SET `prime_minister` = 'Синдзо Абэ' WHERE `country`.`id` = 7;
+UPDATE `country` SET `prime_minister` = 'Шериф Исмаил' WHERE `country`.`id` = 8;
+UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 10;
+
+SELECT president AS name FROM `country`
+UNION
+SELECT prime_minister AS name FROM country
