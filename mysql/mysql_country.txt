@@ -91,7 +91,7 @@ UPDATE country SET president = 'unknown' WHERE name = 'Соединённые Ш
 DELETE FROM country WHERE id = 8;
 
 26. Создать новую колонку continent_id, которя имеет тип TINYINT и значения по умолчанию NULL.
-ALTER TABLE country ADD continent_id TINYINT NULL AFTER `president`;
+ALTER TABLE `country` ADD `continent_id` TINYINT NULL AFTER `president`;
 
 27. Добавить индекс по полю continent_id
 ALTER TABLE country ADD INDEX(continent_id);
@@ -122,8 +122,8 @@ ALTER TABLE country DROP COLUMN continent;
 
 29. Создать таблицу с языками language (например English, Ukrainian, ...). Связать таблицу country с таблицей language, моделируя используемые языки в разных странах. Например, в Украине чаще остальных используют украинский и русский язык. Таким образом необходимо получить связь многие ко многим.
 
-CREATE TABLE `language` ( `id` 
-TINYINT NOT NULL AUTO_INCREMENT,  
+CREATE TABLE `practice_db`.`language` ( 
+`id` TINYINT NOT NULL AUTO_INCREMENT,  
 `name` VARCHAR(100) NOT NULL , 
 PRIMARY KEY (`id`)) ENGINE = InnoDB 
 CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -140,7 +140,7 @@ INSERT INTO language (`id`, `name`) VALUES
 (NULL, 'Китайский'),  
 (NULL, 'Испанский');
 
-CREATE TABLE `country_language` (
+CREATE TABLE `practice_db`.`country_language` (
 `id` TINYINT NOT NULL AUTO_INCREMENT,  
 `country_id` TINYINT NOT NULL,
 `language_id` TINYINT NOT NULL, 
@@ -191,7 +191,7 @@ INSERT INTO language (id, name) VALUES
 (NULL, 'Немекций'), 
 (NULL, 'Польский'),
 (NULL, 'Чешский'), 
-(NULL, 'Албанский')
+(NULL, 'Албанский'),
 (NULL, 'Венгерский'), 
 (NULL, 'Турецкий'), 
 (NULL, 'Финский');
@@ -200,6 +200,7 @@ SELECT language.name AS language FROM `language` LEFT JOIN country_language ON l
 
 21. Добавить в таблицу country поле для премьер-министра страны и заполнить записи значениями. Вывести на экран таблицу, в которой будет представлены все президенты и все премьер-министры всех стран в одну колонку.
 
+ALTER TABLE country ADD prime_minister VARCHAR (100) NULL AFTER `continent_id`;
 UPDATE `country` SET `prime_minister` = 'Гройсман Владимир' WHERE `country`.`id` = 1;
 UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 2;
 UPDATE `country` SET `prime_minister` = 'Маттео Ренци' WHERE `country`.`id` = 3;
@@ -208,8 +209,9 @@ UPDATE `country` SET `prime_minister` = 'Малкольм Тернбулл' WHER
 UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 6;
 UPDATE `country` SET `prime_minister` = 'Синдзо Абэ' WHERE `country`.`id` = 7;
 UPDATE `country` SET `prime_minister` = 'Шериф Исмаил' WHERE `country`.`id` = 8;
+UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 9;
 UPDATE `country` SET `prime_minister` = 'null' WHERE `country`.`id` = 10;
 
 SELECT president AS name FROM `country`
 UNION
-SELECT prime_minister AS name FROM country
+SELECT prime_minister AS name FROM country;
