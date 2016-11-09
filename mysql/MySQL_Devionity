@@ -1,0 +1,25 @@
+1. Топ 3 платежа
+
+SELECT * FROM payments ORDER BY amount DESC LIMIT 3
+
+2. Сумма платежей по годам
+
+SELECT SUM(amount) AS sum, check_number, YEAR(payment_date) FROM payments GROUP BY YEAR(payment_date)
+
+3. Платежи по месяцам и годам
+/* включить в запрос сумму по группам в поле платежей, соединить выбранные поля с полями имя, 
+фамилия таблицы заказчика и указать, какой именно заказчик интересует */
+
+SELECT c.last_name, c.first_name, SUM(p.amount) as payment, YEAR(p.payment_date) AS year, MONTH(p.payment_date) AS month 
+FROM customers c JOIN payments p ON c.id = p.customer_id 
+WHERE c.id = 5
+GROUP BY YEAR(p.payment_date), MONTH(p.payment_date)
+
+4. Количество сотрудников и количество заказчиков для каждого офиса
+
+SELECT o.id as office_id, COUNT(DISTINCT w.id) as worker_count, COUNT(c.id) as customer_count FROM offices o 
+JOIN workers w ON o.id = w.office_id 
+LEFT JOIN customers c ON w.id = c.worker_id 
+GROUP BY o.id
+
+5. Средний доход на клиента/сотрудника
