@@ -23,3 +23,17 @@ LEFT JOIN customers c ON w.id = c.worker_id
 GROUP BY o.id
 
 5. Средний доход на клиента/сотрудника
+/*функция IFNULL(e1, e2) для того, чтобы после вычислений не было NULL значений*/
+
+SELECT c.id AS customer_id, p.id AS payment_id, ifnull( avg( p.amount ) , 0 ) , w.id AS worker_id
+ FROM customers c
+ JOIN payments p ON p.customer_id = c.id
+ RIGHT JOIN workers w ON w.id = c.worker_id
+ GROUP BY w.id
+
+6. Сотрудники без клиентов
+
+SELECT w.last_name AS worker, c.name AS customer
+FROM workers w
+LEFT JOIN customers c ON w.id = c.worker_id
+WHERE c.id IS NULL
