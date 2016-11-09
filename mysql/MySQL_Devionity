@@ -37,3 +37,23 @@ SELECT w.last_name AS worker, c.name AS customer
 FROM workers w
 LEFT JOIN customers c ON w.id = c.worker_id
 WHERE c.id IS NULL
+
+7. Получить ТОП 10 продаваемых товаров
+
+SELECT p.id AS product, COUNT(p.id) AS count
+FROM products p
+JOIN order_details od ON p.id = od.product_id
+ JOIN orders o ON od.order_id = o.id
+ JOIN customers c ON c.id = o.customer_id
+ JOIN payments pa ON pa.customer_id = c.id
+GROUP BY product
+ORDER BY count DESC
+LIMIT 0, 10
+
+8. Сотрудники, привязанные более чем к 5 клиентам
+
+SELECT w.id AS worker_id, w.last_name AS worker_name, COUNT(c.id) AS customer_id
+FROM workers w 
+JOIN customers c ON w.id = c.worker_id
+GROUP BY w.id
+HAVING COUNT(c.id) > 5
