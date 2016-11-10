@@ -57,3 +57,47 @@ FROM workers w
 JOIN customers c ON w.id = c.worker_id
 GROUP BY w.id
 HAVING COUNT(c.id) > 5
+
+9. Заказы с наибольшим количеством товаров
+
+SELECT order_id, count( ordered_amount ) AS products_amount
+ FROM order_details
+ GROUP BY order_id
+ ORDER BY products_amount DESC
+ LIMIT 1
+ 
+ 10. Офисы с менее чем 15 заказов за год
+ 
+ SELECT of.id AS office_id, count( o.id ) AS orders_count
+ FROM offices of
+ JOIN workers w ON w.office_id = of.id
+ JOIN customers c ON c.worker_id = w.id
+ JOIN orders o ON o.customer_id = c.id
+ WHERE year( o.date ) =2003
+ GROUP BY office_id
+ HAVING count( o.id ) < 15
+ 
+ 11. Выбор офисов, кроме конкретных
+ 
+SELECT * FROM offices
+WHERE id NOT IN (1,2,3)
+
+12. День месяца, месяц, год, сумма платежей
+
+SELECT 
+DAY(payment_date) AS day,
+MONTH(payment_date) AS month,
+YEAR(payment_date) AS year,
+sum(amount)
+FROM payments
+GROUP BY payment_date
+ORDER BY YEAR, MONTH, DAY
+
+13. Месяц, год, максимальная сумма платежей
+
+SELECT 
+MONTH(payment_date) AS month,
+YEAR(payment_date) AS year,
+MAX(amount)
+FROM payments
+GROUP BY year, month
