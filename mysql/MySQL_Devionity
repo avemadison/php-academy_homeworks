@@ -101,3 +101,54 @@ YEAR(payment_date) AS year,
 MAX(amount)
 FROM payments
 GROUP BY year, month
+
+14. Клиенты, которые не сделали заказов в феврале 2004 года
+
+SELECT c.id, c.name, o.id FROM customers c
+LEFT JOIN orders o 
+ON (o.customer_id = c.id AND month(o.date) = '2' AND year(o.date) = '2004')
+WHERE o.id IS NULL
+
+15. Период между двумя заказами более трех месяцев. 
+
+SELECT o1.id, o1.date, o1.customer_id,o2.id, o2.date, o2.customer_id 
+FROM orders o1, orders o2 
+WHERE o1.customer_id = o2.customer_id AND o1.date > o2.date 
+AND (select count(*) from orders o3 where o3.date < o1.date and o3.date > o2.date and o1.customer_id = o3.customer_id) = 0 
+AND period_diff(date_format(o1.date, '%y%m'), date_format(o2.date,'%y%m' )) > 3 
+GROUP BY o1.customer_id 
+ORDER BY o1.customer_id ASC
+
+16. Заказы без оплат
+
+SELECT c.id, c.name, c.last_name FROM customers c
+JOIN orders o ON c.id = o.customer_id
+LEFT JOIN payments p ON p.customer_id = c.id 
+WHERE p.id IS NULL
+GROUP BY c.id
+
+17. Таблица по выборке 
+/*Таким образом получим таблицу под названием test_table_2 в которой будут сохранены клиенты и линейки товаров, которые они заказывали.*/
+CREATE TABLE test_table_2 AS (
+SELECT c.id client_id, c.name as client, GROUP_CONCAT(DISTINCT pl.name) 
+FROM customers c 
+JOIN orders o ON c.id = o.customer_id 
+JOIN order_details od ON od.order_id = o.id 
+JOIN products p ON p.id = od.product_id 
+JOIN product_lines pl ON pl.id = p.product_line_id GROUP BY c.id
+)
+
+18. Добавляем запись по выборке
+INSERT INTO test_table_2 (client_id, client) SELECT 634, 'Some guy'
+
+19. Работа с представлениями
+
+CREATE VIEW customer_product_lines AS 
+SELECT c.id client_id, c.name as client, GROUP_CONCAT(DISTINCT pl.name)
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+JOIN order_details od ON od.order_id = o.id
+JOIN products p ON p.id = od.product_id
+JOIN product_lines pl ON pl.id = p.product_line_id
+GROUP BY c.id
+//SELECT * FROM customer_product_lines
