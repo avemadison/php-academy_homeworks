@@ -35,3 +35,20 @@ function find_file($dir, $word){
 if ($_POST){
     dd(find_file($dir,$word));
 }
+
+// Another variant
+
+$dir = "1/";
+$word = "index.php";
+function checkFolder($dir,$word)
+{
+    $result = array();
+    $files = scandir($dir);
+    for($i = 0; $i< sizeof($files); $i++)
+    {
+        if($files[$i] === $word)
+            array_push($result,$files[$i]);
+    }
+    return $result;
+}
+print_r (checkFolder($dir,$word));
