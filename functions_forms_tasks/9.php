@@ -31,4 +31,32 @@ require 'functions/check_post_get.php';
 $word = getKey('post', 'comment');
 echo reverseWord($word).'<br>';
 echo reverseWord($word);
+?>
 
+//Another variant
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action = "index.php" method="post">
+    <textarea name="text"></textarea>
+    <input type = "submit" value = "Go!">
+</form>
+</body>
+</html>
+<?php
+$s1 = $_POST["text"];
+function reverseStr($s1)
+{
+    $tempStr = "";
+    for($i = strlen($s1); $i >= 0; $i --)
+    {
+        $tempStr.=$s1[$i];
+    }
+    return $tempStr;
+}
+echo reverseStr($s1);
