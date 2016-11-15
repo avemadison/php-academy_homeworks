@@ -45,3 +45,14 @@ echo <<<  "HTML"
 Выведем список в директории '{$dir_name}'
 HTML;
 show_dir($dir_name);
+
+//variant 3
+
+<?php
+$dir = "1/";
+function checkFolder($dir)
+{
+    return $files = scandir($dir);
+}
+print_r (checkFolder($dir));
+?>
