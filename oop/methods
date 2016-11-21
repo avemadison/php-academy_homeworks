@@ -1,1 +1,42 @@
+<?php
+error_reporting(E_All);
+class User
+{
+ public $login;
+ public $password;
+ public $email;
+ public $rating = 0;
+ 
+ public function logIn($user)
+ {
+     if ($user !== null) {
+            $_SESSION['user'] = $user['email'];
+            setFlash('Login!');
+        }
+ }
+ 
+ public function logOut($user)
+ {
+     if ($user === null) {
+            setFlash('Logout');
+            die;
+        }
+ }
+ 
+}
+$mike = new User;
+$chester = new User;
+$max = new User;
+
+$mike->login = 'Mike';
+$mike->password = 12345;
+$mike->email = 'mikedriv@gmail.com';
+
+$chester->login = 'Chester';
+$chester->password = 78096;
+$chester->email = 'chesdriv@rambler.ru';
+
+$max->login = 'Max';
+$max->password = 54687;
+$max->email = 'maxdriv@mail.ru';
 
