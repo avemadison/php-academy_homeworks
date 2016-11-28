@@ -1,13 +1,15 @@
 <?php
-
-<?php
-error_reporting(E_All);
+/*1.Создать класс User со свойствами login, password, email, rating. По умолчанию значение рейтинга задать нулевым.
+2.Создать класс Car. Записать в этот класс свойства brand, model, year, driver. Создать экземпляры машин Toyota Corolla (2000), 
+Mazda 6 (2015), Ford Taurus (1995). Создать экземпляры класса User для нескольких пользователей системы.
+В свойство driver объектов класса Car записать объекты класса User. 
+Вывести объекты класса Car на экран при помощи var_dump(), print_r() */
 class User
 {
- public $login;
- public $password;
- public $email;
- public $rating = 0;
+    public $login;
+    public $password;
+    public $email;
+    public $rating = 0;
 }
 $mike = new User;
 $chester = new User;
@@ -25,27 +27,39 @@ $max->login = 'Max';
 $max->password = 54687;
 $max->email = 'maxdriv@mail.ru';
 
-
-class Car 
+class Car
 {
     public $brand;
     public $model;
     public $year;
     public $driver;
 }
-$toyota = new Car;
-$mazda = new Car;
-$ford = new Car;
+$car1 = new Car;
+$car2 = new Car;
+$car3 = new Car;
 
-$toyota->brand = 'Toyota';
-$toyota->model = 'Corolla';
-$toyota->year = 2000;
-$toyota->driver
+$car1->brand = 'Toyota';
+$car1->model = 'Corolla';
+$car1->year = 2000;
+$car1->driver = $mike;
 
-$mazda->brand = 'Mazda';
-$mazda->model = 6; 
-$mazda->year = 2015;
 
-$ford->brand = 'Ford';
-$ford->model = 'Taurus';
-$ford->year = 1995;
+$car2->brand = 'Mazda';
+$car2->model = 6;
+$car2->year = 2015;
+$car2->driver = $chester;
+
+$car3->brand = 'Ford';
+$car3->model = 'Taurus';
+$car3->year = 1995;
+$car3->driver = $max;
+
+echo '<pre>';
+var_dump($car1);
+var_dump($car2);
+var_dump($car3);
+
+echo '<pre>';
+print_r($car1);
+print_r($car2);
+print_r($car3);
