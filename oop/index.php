@@ -63,3 +63,9 @@ echo '<pre>';
 print_r($car1);
 print_r($car2);
 print_r($car3);
+
+/*Создать массив, который описывает сообщение ключами name, email, message с соответствующими значениями. 
+Привести массив к объекту. Проанализировать результат при помощи var_dump.*/
+$array = ['name' => 'Chester', 'email' => 'chesdriv@rambler.ru', 'massage' => 'Hello everybody'];
+$obj = (object)$array;
+var_dump($obj);
