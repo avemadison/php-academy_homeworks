@@ -3,13 +3,37 @@
 2.Создать класс Car. Записать в этот класс свойства brand, model, year, driver. Создать экземпляры машин Toyota Corolla (2000), 
 Mazda 6 (2015), Ford Taurus (1995). Создать экземпляры класса User для нескольких пользователей системы.
 В свойство driver объектов класса Car записать объекты класса User. 
-Вывести объекты класса Car на экран при помощи var_dump(), print_r() */
+Вывести объекты класса Car на экран при помощи var_dump(), print_r() 
+3. Для класса User из предыдущего занятия создать методы login(), logout(), которые просто выводят на экран соответствующее сообщение. 
+Создать экземпляр класса, вызвать созданные методы.
+4. В класс Car из предыдущих заданий добавить методы showBrand(), showModel() которые выводят на экран значения свойств brand, model 
+соответственно. В класс User из предыдущих заданий добавить свойство isLogged, которое принимает true, если пользователь успешно
+авторизировался, и false при выходе из системы. Задать значения для этого свойства в методах login(), logout().
+5. В класс Car из предыдущих заданий добавить private свойство price, а также публичные геттер и сеттер для него. 
+Геттер должен зависеть от одного параметра. В зависимости от того, было ли в функцию геттера передано true, выводить отформатированную 
+цену, либо же в обычном виде (использовать функцию number_format). Сеттер должен приводить входящий параметр к числу, у которого не 
+более 2 знаков после запятой (использовать round).
+6. Унаследовать от класса Car из предыдущих занятий класс WaterCar со свойством waterSpeed.*/
 class User
 {
     public $login;
     public $password;
     public $email;
     public $rating = 0;
+    public $isLogged;
+
+
+    public function login()
+    {
+        $this->isLogged = true;
+        echo 'Login';
+    }
+
+    public function logout()
+    {
+        $this->isLogged = false;
+        echo 'Logout';
+    }
 }
 $mike = new User;
 $chester = new User;
@@ -33,7 +57,39 @@ class Car
     public $model;
     public $year;
     public $driver;
+    private $price;
+
+    public function setPrice($param)
+    {
+        return $this->price = round($this->price = $param, 2);
+
+    }
+
+    public function getPrice($a = true)
+    {
+        if($a){
+            return number_format($this->price, 2,'.',' ');
+        }
+        else {
+            return $this->price;
+        }
+    }
+    public function showBrand()
+    {
+        echo $this->brand;
+    }
+
+    public function showModel()
+    {
+        echo $this->model;
+    }
 }
+
+class WaterCar extends Car
+{
+    public $waterSpeed;
+}
+
 $car1 = new Car;
 $car2 = new Car;
 $car3 = new Car;
