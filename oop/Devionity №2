@@ -1,0 +1,82 @@
+<?php
+/*Изменить область видимости свойств класса User на protected.
+Унаследовать от класса User классы Manager, Admin. Создать объекты менеджера и админа, задать значения для свойств объектов.*/
+
+class User
+{
+    protected $login;
+    protected $password;
+    protected $email;
+    protected $rating = 0;
+    protected $isLogged;
+
+
+    public function login()
+    {
+        $this->isLogged = true;
+        echo 'Login';
+    }
+
+    public function logout()
+    {
+        $this->isLogged = false;
+        echo 'Logout';
+    }
+}
+
+class Manager extends User
+{
+public function setLogin($login)
+{
+    $this->login = $login;
+}
+public function setPassword($password)
+{
+    $this->password = $password;
+}
+public function setEmail($email)
+{
+    $this->email = $email;
+}
+public function setRating($rating)
+{
+    $this->rating = $rating;
+}
+}
+
+class Admin extends User
+{
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+}
+
+$manager = new Manager;
+$admin = new Admin;
+
+$manager->setLogin('manager');
+$manager->setPassword(4589);
+$manager->setEmail('mail@email.com');
+$manager->setRating(1);
+
+$admin->setLogin('admin');
+$admin->setPassword(3257);
+$admin->setEmail('adminka@email.ru');
+$admin->setRating(5);
+
+echo '<pre>';
+var_dump($admin);
+var_dump($manager);
