@@ -1,0 +1,58 @@
+<?php
+/*Создать экземпляр класса User с конкретными значениями свойств и клонировать его в новую переменную.
+Свойствам нового экземпляра присвоить новые значения. Сравнить полученные экземпляры класса.*/
+class User
+{
+    protected $login;
+    protected $password;
+    protected $email;
+    protected $rating = 0;
+    protected $isLogged;
+
+
+    public function login()
+    {
+        $this->isLogged = true;
+        echo 'Login';
+    }
+
+    public function logout()
+    {
+        $this->isLogged = false;
+        echo 'Logout';
+    }
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+}
+
+$user = new User;
+$user->setLogin('Katerina');
+$user->setPassword(6578);
+$user->setEmail('kat@email.com');
+$user->setRating(3);
+$user->login();
+
+$user2 = clone $user;
+$user2->setLogin('Mark');
+$user2->setPassword(1457);
+$user2->setEmail('mark@email.com');
+$user2->setRating(2);
+$user2->logout();
+
+echo '<pre>';
+var_dump($user);
+var_dump($user2);
