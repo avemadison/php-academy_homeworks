@@ -1,0 +1,29 @@
+<?php
+/* Создать контактную форму. Создать скрипт обработчик контактной формы. Создать класс ContactForm со свойствами,
+значения которых совпадают с названиями полей формы. Создать экземпляр класса ContactForm по массиву $_POST при отправке формы.*/
+
+class ContactForm
+{
+    private $username;
+    private $password;
+
+    public function __construct($username, $password)
+    {
+        $this->username = $username;
+        $this->password = $password;
+    }
+}
+if($_POST){
+    $u = $_POST['username'];
+    $p = $_POST['password'];
+    $newUser = new ContactForm($u, $p);
+}
+echo '<pre>';
+var_dump($newUser);
+?>
+
+<form action="" method="post">
+<input name="username" type="text" placeholder="Enter name"><br>
+<input name="password" type="text" placeholder="Enter password"><br>
+<button>Go</button>
+</form>
