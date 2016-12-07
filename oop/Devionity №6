@@ -1,0 +1,15 @@
+<?php
+/* Создать класс со статическим свойством, которое будет содержать значение количества созданных экземпляров.*/
+class countObject
+{
+    public static $count = 0;
+    public function __construct()
+    {
+        self::$count += 1;
+    }
+}
+$obj1 = new countObject();
+$obj2 = new countObject();
+$obj3 = new countObject();
+echo '<pre>';
+var_dump(countObject::$count);
