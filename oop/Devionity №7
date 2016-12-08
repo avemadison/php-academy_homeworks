@@ -1,0 +1,46 @@
+<?php
+/*Создать интерфейс для класса User из предыдущих заданий*/
+interface Users
+{
+    public function login();
+    public function logout();
+    public function setLogin($login);
+    public function setPassword($password);
+    public function setEmail($email);
+    public function setRating($rating);
+}
+class User implements Users
+{
+    protected $login;
+    protected $password;
+    protected $email;
+    protected $rating = 0;
+    protected $isLogged;
+    public function login()
+    {
+        $this->isLogged = true;
+        echo 'Login';
+    }
+
+    public function logout()
+    {
+        $this->isLogged = false;
+        echo 'Logout';
+    }
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+}
