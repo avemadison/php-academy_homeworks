@@ -14,7 +14,8 @@ Mazda 6 (2015), Ford Taurus (1995). Создать экземпляры клас
 цену, либо же в обычном виде (использовать функцию number_format). Сеттер должен приводить входящий параметр к числу, у которого не 
 более 2 знаков после запятой (использовать round).
 6. Унаследовать от класса Car из предыдущих занятий класс WaterCar со свойством waterSpeed.
-7.В класс Car добавить конструктор, который выводит сообщение Car created при создании нового экземпляра класса.*/
+7.В класс Car добавить конструктор, который выводит сообщение Car created при создании нового экземпляра класса.
+8.Добавить магические методы __get, __set для закрытых свойств, которые будут возвращать / присваивать соответствующие значения.*/
 class User
 {
     public $login;
@@ -22,7 +23,20 @@ class User
     public $email;
     public $rating = 0;
     public $isLogged;
-
+    
+    public function __get($name)
+  {
+    if(isset($this->name))
+    {
+        return $this->name;
+    }
+  }
+  
+   public function __set($name, $value)
+  {
+    $this->name = $value;
+  }
+  
     public function login()
     {
         $this->isLogged = true;
